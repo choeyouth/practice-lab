@@ -1,3 +1,41 @@
-**/.metadata
-**/**/.metadata
+# IDE 설정 파일
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# 빌드 결과 파일
+target/
+bin/
+out/
+build/
+dist/
+
+# 운영환경 관련 파일
+.env
+config/
+
+# 시스템 파일
 .DS_Store
+Thumbs.db
+desktop.ini
+
+# 로그 파일
+*.log
+logs/
+
+# 의존성 파일
+node_modules/
+vendor/
+
+# Java 관련 파일
+*.class
+*.jar
+*.war
+*.ear
+
+# 텍스트 편집기 임시 파일
+*.bak
+*.swp
