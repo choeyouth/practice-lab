@@ -39,3 +39,4 @@ vendor/
 # 텍스트 편집기 임시 파일
 *.bak
 *.swp
+/.metadata/
