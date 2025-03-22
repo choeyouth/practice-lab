@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask 전송 테스트</title>
+	<link rel="stylesheet" href="http://bit.ly/3WJ5ilK">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <h2>Spring Boot → Flask 데이터 전송</h2>
+    
+    <form id="dataForm">
+        <label for="name">이름:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="tel">전화번호:</label>
+        <input type="text" id="tel" name="tel" required><br><br>
+
+        <button type="submit">전송</button>
+    </form>
+
+    <h3>서버 응답</h3>
+    <p id="responseName"></p>
+    <p id="responseTel"></p>
+
+    <script>
+        $(document).ready(function () {
+            $("#dataForm").submit(function (event) {
+                event.preventDefault(); // 폼 기본 제출 방지
+
+                // 입력된 데이터 가져오기
+                var formData = {
+                    name: $("#name").val(),
+                    tel: $("#tel").val()
+                };
+
+                // AJAX 요청 보내기
+                $.ajax({
+                    url: "/flask",  // Spring Boot 컨트롤러 URL
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(formData),
+                    success: function (response) {
+                        
+						// JSON 문자열을 객체로 변환
+                        if (typeof response === 'string') {
+							response = JSON.parse(response);
+						}
+						
+                        $("#responseName").text("이름: " + response.name);
+                        $("#responseTel").text("전화번호: " + response.tel);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("에러 발생:", error);
+                        $("#responseName").text("에러 발생!");
+                        $("#responseTel").text("");
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
