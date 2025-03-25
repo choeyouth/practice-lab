@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>환자 수정</title>
+	<link rel="stylesheet" href="http://bit.ly/3WJ5ilK">
+	<link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <h2>환자 정보 수정</h2>
+
+    <form action="/patient/edit" method="post">
+        <input type="hidden" name="id" th:value="${patient.id}">
+
+        <label>이름</label>
+        <input type="text" name="name" th:value="${patient.name}" required>
+
+        <label>생년월일</label>
+        <input type="date" name="birthdate" th:value="${patient.birthdate}" required>
+
+        <label>성별</label>
+        <select name="gender" required>
+            <option value="M" th:selected="${patient.gender == 'M'}">남</option>
+            <option value="F" th:selected="${patient.gender == 'F'}">여</option>
+        </select>
+
+        <label>연락처</label>
+        <input type="text" name="contact" th:value="${patient.contact}">
+
+        <button type="submit">수정</button>
+    </form>
+
+    <a href="/patients">뒤로 가기</a>
+
+</body>
+</html>

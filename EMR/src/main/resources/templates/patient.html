@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>환자 상세 정보</title>
+    <link rel="stylesheet" href="http://bit.ly/3WJ5ilK">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <!-- 첫 번째 진료 기록에서 환자 정보 가져오기 -->
+    <h2 th:text="${list[0].patients.name} + '님의 진료 기록'"></h2>
+
+    <p><strong>생년월일:</strong> <span th:text="${list[0].patients.birthdate}"></span></p>
+    <p><strong>성별:</strong> <span th:text="${list[0].patients.gender}"></span></p>
+    <p><strong>연락처:</strong> <span th:text="${list[0].patients.contact}"></span></p>
+    <!-- <p><strong>나이:</strong> <span th:text="${list[0].patients.age} + '세'"></span></p> -->
+
+    <!-- 진료 기록 추가 폼 -->
+    <h3>새로운 진료 기록 추가</h3>
+    <form action="/patient/addRecord" method="post">
+        <input type="hidden" name="patientId" th:value="${list[0].patients.id}">
+
+        <label>진단 내용</label>
+        <textarea name="diagnosis" required></textarea>
+
+        <label>치료 내용</label>
+        <textarea name="treatment" required></textarea>
+
+        <button type="submit">추가</button>
+    </form>
+
+    <!-- 기존 진료 기록 목록 -->
+    <h3>진료 기록</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>진단 내용</th>
+                <th>치료 내용</th>
+                <th>날짜</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="record : ${list}">
+                <td th:text="${record.diagnosis}"></td>
+                <td th:text="${record.treatment}"></td>
+                <td th:text="${record.recordDate}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="/patients">뒤로 가기</a>
+
+</body>
+</html>

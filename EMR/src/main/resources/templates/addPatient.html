@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>환자 추가</title>
+    <link rel="stylesheet" href="http://bit.ly/3WJ5ilK">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <h2>환자 정보 추가</h2>
+
+    <form id="addPatientForm">
+        <p>
+            <label>이름</label>
+            <input type="text" placeholder="이름" name="name" required>
+        </p>
+
+        <p>
+            <label>생년월일</label>
+            <input type="date" name="birthdate" required>
+        </p>
+
+        <p>
+            <label>성별</label>
+            <select name="gender" required>
+                <option value="M">남</option>
+                <option value="F">여</option>
+            </select>
+        </p>
+
+        <p>
+            <label>연락처</label>
+            <input type="text" placeholder="연락처" name="contact">
+        </p>
+
+        <p><button type="submit">추가</button></p>
+    </form>
+
+    <p><a href="/patients">뒤로 가기</a></p>
+
+    <script>
+        // 폼 제출 시 JSON 데이터로 처리
+        $('#addPatientForm').on('submit', function(e) {
+            e.preventDefault(); // 기본 폼 제출을 막음
+
+            const formData = {
+                name: $('input[name="name"]').val(),
+                birthdate: $('input[name="birthdate"]').val(),
+                gender: $('select[name="gender"]').val(),
+                contact: $('input[name="contact"]').val()
+            };
+
+            $.ajax({
+                url: '/addPatient',  // Spring 컨트롤러 URL
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),  // 데이터를 JSON 형식으로 변환
+                success: function(response) {
+                    alert('환자 정보가 추가되었습니다.');
+                    window.location.href = '/patients';  // 환자 목록 페이지로 리디렉션
+                },
+                error: function(xhr, status, error) {
+                    alert('오류 발생: ' + error);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>의료 기록 관리 시스템</title>
+	<link rel="stylesheet" href="http://bit.ly/3WJ5ilK">
+	<link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <h2>환자 목록</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>이름</th>
+                <th>생년월일</th>
+                <th>성별</th>
+                <th>연락처</th>
+                <th>기록 보기</th>
+            </tr>
+        </thead>
+        <tbody>
+			<tr th:each="patient : ${patients}">
+               <td th:text="${patient.name}">홍길동</td> <!-- 환자 이름 -->
+               <td th:text="${patient.birthdate}">1980-05-12</td> <!-- 환자 생년월일 -->
+               <td th:text="${patient.gender}">남</td> <!-- 환자 성별 -->
+               <td th:text="${patient.contact}">010-1234-5678</td> <!-- 환자 연락처 -->
+               <td><a th:href="@{/patient/{id}(id=${patient.id})}">보기</a></td> <!-- 기록 보기 링크 -->
+           </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
