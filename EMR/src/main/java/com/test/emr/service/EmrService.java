@@ -2,8 +2,8 @@ package com.test.emr.service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -26,6 +26,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EmrService {
 
+	@Value("${flask.url}")
+    private String flaskUrl;
+	
 	private final EMRCustomRepository emrCustomRepository;
 	private final PatientsRepository patientsRepository;
 	private final MedicalRecordRepository medicalRecordRepository;
@@ -38,10 +41,10 @@ public class EmrService {
 	public Patients processAndSavePatient(PatientsDTO patientsDTO) throws JsonProcessingException {
 		
 		// FlaskAPI 호출
-		String flaskUrl = "http://127.0.0.1:5050/process_patient";
+		String saveUrl = "process_patient";
 		
 		ResponseEntity<Map> response = restTemplate.exchange(
-						flaskUrl, 
+						flaskUrl + saveUrl, 
 						HttpMethod.POST, 
 						new HttpEntity<>(patientsDTO, createHeaders()), 
 						Map.class
@@ -78,14 +81,15 @@ public class EmrService {
 		return patientsRepository.findAll();
 	}
 
-	public List<MedicalRecord> getPatientById(Long id) {
-		List<MedicalRecord> list = emrCustomRepository.findById(id);
-		ResponseEntity<Map> response = getProcessPatient(list);
-		return list;
+	public Patients getPatientById(Long id) {
+		Patients patient = emrCustomRepository.findById(id);
+		System.out.println(patient.toString());
+		//ResponseEntity<Map> response = getProcessPatient(list);
+		return patient;
 	}
 
-	private ResponseEntity<Map> getProcessPatient(List<MedicalRecord> list) {
-		// TODO Auto-generated method stub
+	private ResponseEntity<Map> getProcessPatient(List<Patients> list) {
+		
 		return null;
 	}
 	

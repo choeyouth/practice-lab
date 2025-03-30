@@ -63,4 +63,16 @@ public class MedicalRecord {
     	this.updatedAt = LocalDateTime.now();
     }
 	
+    @Override
+    public String toString() {
+        return "MedicalRecord{" +
+                "id=" + id +
+                ", diagnosis='" + diagnosis + '\'' +
+                ", treatment='" + treatment + '\'' +
+                ", recordDate='" + recordDate + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", patientsId=" + (patients != null ? patients.getId() : null) + 
+                '}';
+    }
 }

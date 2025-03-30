@@ -26,5 +26,8 @@ spring:
         format_sql: true # SQL을 이쁘게
 
 server:
-  port: 8090
+  port: 8091
+
+flask:
+  url: http://127.0.0.1:5050/
 

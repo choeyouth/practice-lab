@@ -2,6 +2,7 @@ package com.test.emr.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,8 +41,8 @@ public class EmrController {
 	
 	@GetMapping("/patient/{id}")
 	public String getPatient(@PathVariable("id") Long id, Model model) {
-		List<MedicalRecord> list = emrService.getPatientById(id);
-		model.addAttribute("list", list);
+		Patients patient = emrService.getPatientById(id);
+		model.addAttribute("patient", patient);
 		return "patient";
 	}
 	

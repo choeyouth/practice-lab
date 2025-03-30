@@ -20,12 +20,12 @@ public class EMRCustomRepository {
 
 	private final JPAQueryFactory jpaQueryFactory;
 
-	public List<MedicalRecord> findById(Long id) {
+	public Patients findById(Long id) {
 		return jpaQueryFactory
-				.selectFrom(medicalRecord)
-				.leftJoin(medicalRecord.patients, patients).fetchJoin()
+				.selectFrom(patients)
+				.leftJoin(patients.medicalRecords, medicalRecord).fetchJoin()
 				.where(patients.id.eq(id))
-				.fetch();
+				.fetchOne();
 	
 	}
 	
