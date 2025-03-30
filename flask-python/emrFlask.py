@@ -31,15 +31,28 @@ def process_patient_data(patient_data):
     contact = patient_data['contact']
     formatted_contact = format_contact(contact)
     
+    # 성별 처리
+    gender = patient_data['gender']
+    processed_gender = gender_processing(gender)
+
     # 전처리된 데이터 반환
     processed_date = {
         "name": patient_data['name'],
         "birthdate": birthdate,
         "age": age, # 계산된 나이 추가
-        "gender": patient_data['gender'],
-        "contact": formatted_contact
+        "gender": processed_gender,
+        # "contact": formatted_contact
     }
     return processed_date
+
+# 성별 처리 함수 
+def gender_processing(gender):
+    if gender == 'M':
+        return '남'
+    elif gender == 'F':
+        return '여'
+    else:
+        return '기타'
 
 # 생일을 기준으로 나이 계산하는 함수
 def calculate_age(birthdate_obj):
@@ -69,11 +82,11 @@ def process_patient():
     # 전처리된 데이터를 반환
     return jsonify(processed_data)
 
-@app.route('/process_patient_record', methods=['GET'])
+@app.route('/process_patient_record', methods=['POST'])
 def get_patients_list():
     # 요청에서 환자 데이터 받기
     patient_data = request.get_json()
-
+    
     if not patient_data:
         return jsonify({"error": "No patient data provided"}), 400
     

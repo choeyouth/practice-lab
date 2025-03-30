@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.test.emr.entity.MedicalRecord;
 import com.test.emr.entity.Patients;
 import com.test.emr.model.PatientsDTO;
+import com.test.emr.model.Result;
 import com.test.emr.repository.EMRCustomRepository;
 import com.test.emr.repository.MedicalRecordRepository;
 import com.test.emr.repository.PatientsRepository;
@@ -50,7 +50,7 @@ public class EmrService {
 						Map.class
 					);
 
-		// Flask에서 전처리된 데이터를 Patients 갹채로 변환
+		// Flask에서 전처리된 데이터를 Patients 객체로 변환
 		Map<String, Object> processedData = response.getBody();
 
 		// PatientDTO 또는 processedData를 Patients 객체로 변환
@@ -81,16 +81,37 @@ public class EmrService {
 		return patientsRepository.findAll();
 	}
 
-	public Patients getPatientById(Long id) {
+	public Result getPatientById(Long id) {
 		Patients patient = emrCustomRepository.findById(id);
-		System.out.println(patient.toString());
-		//ResponseEntity<Map> response = getProcessPatient(list);
-		return patient;
+		Result response = getProcessPatient(patient);
+		return response;
 	}
 
-	private ResponseEntity<Map> getProcessPatient(List<Patients> list) {
+	private Result getProcessPatient(Patients patient) {
 		
-		return null;
+		String getUrl = "process_patient_record";
+		
+		ResponseEntity<Map> response = restTemplate.exchange(
+				flaskUrl + getUrl, 
+				HttpMethod.POST, 
+				new HttpEntity<>(patient, createHeaders()), 
+				Map.class
+			);
+		
+		Map<String, Object> processedData = response.getBody();
+		
+	    String genderKR = (String) processedData.get("gender");
+	    Integer age = (Integer) processedData.get("age");
+		
+	    PatientsDTO dto = new PatientsDTO();
+	    dto.setAge(age);
+	    dto.setGenderKR(genderKR);
+	    
+	    Result result = new Result();
+	    result.setPatients(patient);
+	    result.setPatientsDTO(dto);
+	    
+		return result;
 	}
 	
 }

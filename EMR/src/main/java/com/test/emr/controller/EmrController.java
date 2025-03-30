@@ -17,6 +17,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.test.emr.entity.MedicalRecord;
 import com.test.emr.entity.Patients;
 import com.test.emr.model.PatientsDTO;
+import com.test.emr.model.Result;
 import com.test.emr.service.EmrService;
 
 import lombok.RequiredArgsConstructor;
@@ -41,8 +42,8 @@ public class EmrController {
 	
 	@GetMapping("/patient/{id}")
 	public String getPatient(@PathVariable("id") Long id, Model model) {
-		Patients patient = emrService.getPatientById(id);
-		model.addAttribute("patient", patient);
+		Result result = emrService.getPatientById(id);
+		model.addAttribute("result", result);
 		return "patient";
 	}
 	

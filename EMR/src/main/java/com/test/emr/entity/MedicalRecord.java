@@ -72,7 +72,7 @@ public class MedicalRecord {
                 ", recordDate='" + recordDate + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
-                ", patientsId=" + (patients != null ? patients.getId() : null) + 
+                ", patientsId=" + (patients != null ? patients.getId() : null) +
                 '}';
     }
 }

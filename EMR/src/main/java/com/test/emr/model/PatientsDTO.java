@@ -1,6 +1,9 @@
 package com.test.emr.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.test.emr.entity.MedicalRecord;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +29,11 @@ public class PatientsDTO {
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    
+    private Integer age;
+    private String genderKR;
+    
+    private List<MedicalRecord> medicalRecords;
 	
 }
 

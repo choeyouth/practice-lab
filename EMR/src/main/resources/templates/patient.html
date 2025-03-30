@@ -11,17 +11,17 @@
 <body>
 
     <!-- 첫 번째 진료 기록에서 환자 정보 가져오기 -->
-    <h2 th:text="${patient.name} + '님의 진료 기록'"></h2>
+    <h2 th:text="${result.patients.name} + '님의 진료 기록'"></h2>
 
-    <p><strong>생년월일:</strong> <span th:text="${patient.birthdate}"></span></p>
-    <p><strong>성별:</strong> <span th:text="${patient.gender}"></span></p>
-    <p><strong>연락처:</strong> <span th:text="${patient.contact}"></span></p>
-    <!-- <p><strong>나이:</strong> <span th:text="${patient[0].patients.age} + '세'"></span></p> -->
+    <p><strong>생년월일:</strong> <span th:text="${result.patients.birthdate}"></span></p>
+    <p><strong>성별:</strong> <span th:text="${result.patientsDTO.genderKR}"></span></p>
+    <p><strong>연락처:</strong> <span th:text="${result.patients.contact}"></span></p>
+    <p><strong>나이:</strong> <span th:text="${result.patientsDTO.age} + '세'"></span></p> 
 
     <!-- 진료 기록 추가 폼 -->
     <h3>새로운 진료 기록 추가</h3>
     <form action="/patient/addRecord" method="post">
-        <input type="hidden" name="patientId" th:value="${patient.id}">
+        <input type="hidden" name="patientId" th:value="${result.patients.id}">
 
         <label>진단 내용</label>
         <textarea name="diagnosis" required></textarea>
@@ -43,7 +43,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="record : ${patient.medicalRecords}">
+            <tr th:each="record : ${result.patients.medicalRecords}">
                 <td th:text="${record.diagnosis}"></td>
                 <td th:text="${record.treatment}"></td>
                 <td th:text="${record.recordDate}"></td>

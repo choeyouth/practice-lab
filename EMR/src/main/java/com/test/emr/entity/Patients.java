@@ -3,6 +3,8 @@ package com.test.emr.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -52,6 +54,7 @@ public class Patients {
     //private Integer age;
     
     @OneToMany(mappedBy = "patients")
+    @JsonIgnoreProperties("patients")  
     private List<MedicalRecord> medicalRecords;
 	
     //생성 일시와 수정 일시 자동 생성
